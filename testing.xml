@@ -1,0 +1,8 @@
+
+<suite name="MobileAutomationSuite">
+    <test name="SampleTest">
+        <classes>
+            <class name="tests.DemoAppLoginTest"/>
+        </classes>
+    </test>
+</suite>
