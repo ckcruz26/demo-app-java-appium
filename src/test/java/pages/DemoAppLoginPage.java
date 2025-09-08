@@ -4,17 +4,12 @@ import org.openqa.selenium.By;
 
 import base.DemoAppBasePage;
 import io.appium.java_client.AppiumDriver;
-import utils.PropertiesReader;
+import utils.DemoAppXpathUtils;
+
 
 public class DemoAppLoginPage extends DemoAppBasePage{
 	
 	private DemoAppNavigationPage navigation;
-
-	
-	private static final String USERNAME_FIELD = PropertiesReader.get("LoginPageXpaths.usernameField");
-	private static final String PASSWORD_FIELD = PropertiesReader.get("LoginPageXpaths.passwordField");
-	private static final String LOGIN_BUTTON   = PropertiesReader.get("LoginPageXpaths.loginButton");
-
 	
 	public DemoAppLoginPage(AppiumDriver driver) {
 		super(driver);
@@ -26,10 +21,17 @@ public class DemoAppLoginPage extends DemoAppBasePage{
 		this.navigation.redirectToLoginMenu();
 	}
 	
-	public void loginCredentials() {
-	    this.type(By.xpath(USERNAME_FIELD), "alice@example.com");
-	    this.type(By.xpath(PASSWORD_FIELD), "10203040");
-	    this.click(By.xpath(LOGIN_BUTTON));
+	public void loginCredentials(String email, String password) {
+	    this.type(By.xpath(DemoAppXpathUtils.USERNAME_FIELD), email);
+	    this.type(By.xpath(DemoAppXpathUtils.PASSWORD_FIELD), password);
+	    this.click(By.xpath(DemoAppXpathUtils.LOGIN_BUTTON));
+	}	
+	
+	public void logoutSession() {
+		this.navigation.clickHamburgerMenu();
+		this.navigation.redirectToLogout();
+		this.isDisplayed(By.xpath(DemoAppXpathUtils.LOGOUT_BUTTON));
+		this.click(By.xpath(DemoAppXpathUtils.LOGOUT_BUTTON));
 	}
 
 	

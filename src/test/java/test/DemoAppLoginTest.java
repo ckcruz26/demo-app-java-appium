@@ -1,24 +1,32 @@
 package test;
 
 import base.DemoAppBaseTest;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DemoAppLoginPage;
 
 public class DemoAppLoginTest extends DemoAppBaseTest {
 
-    @Test
-    public void testLogin() {
-        // Initialize the page object using the inherited driver
-        DemoAppLoginPage loginPage = new DemoAppLoginPage(driver);
+    private DemoAppLoginPage loginPage;
 
-        // Navigate to login module
+    @BeforeMethod
+    public void goToLogin() {
+        // initialize page object
+        loginPage = new DemoAppLoginPage(driver);
         loginPage.redirectToLoginModule();
-
-        // Enter login credentials
-        loginPage.loginCredentials();
-
-        // TODO: add assertion to verify login success
-        // Example:
-        // Assert.assertTrue(loginPage.isLoginSuccessful());
     }
+
+    @Test
+    public void validCredentials() {
+        loginPage.loginCredentials("bob@example.com", "10203040");
+        loginPage.logoutSession();
+    }
+    
+    @Test
+    public void invalidCredentials() {
+    	loginPage.loginCredentials("bob@example.com", "zxczcx");
+    }
+    
+   
 }

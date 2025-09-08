@@ -2,26 +2,29 @@ package base;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import org.testng.annotations.*;
 import java.net.URL;
 
 public class DemoAppBaseTest {
 	
-	protected AppiumDriver driver;
+    protected AppiumDriver driver;
 	
     @BeforeClass
     public void setUp() throws Exception {
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "Android");
-        caps.setCapability("appium:deviceName", "Android Device");
-        caps.setCapability("appium:udid", "491f9254"); // change to your device
-        caps.setCapability("appium:platformVersion", "15");
-        caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:appPackage", "com.saucelabs.mydemoapp.rn");
-        caps.setCapability("appium:appActivity", "com.saucelabs.mydemoapp.rn.MainActivity");
+        UiAutomator2Options options = new UiAutomator2Options();
+        options.setPlatformName("Android");
+        options.setDeviceName("Android Device");
+        options.setUdid("491f9254"); // change to your device
+        options.setPlatformVersion("15");
+        options.setAutomationName("UiAutomator2");
+        options.setAppPackage("com.saucelabs.mydemoapp.rn");
+        options.setAppActivity("com.saucelabs.mydemoapp.rn.MainActivity");
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), caps);
+        // assign directly to the class-level driver
+        driver = new AndroidDriver(
+                new URL("http://127.0.0.1:4723"), options
+        );
     }
 
     @AfterClass
@@ -30,5 +33,4 @@ public class DemoAppBaseTest {
             driver.quit();
         }
     }
-	
 }
